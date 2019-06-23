@@ -17,6 +17,7 @@
     <h1>Contact us</h1>
     <form th:action="@{/}" th:object="${createTicketForm}" method="post" class="needs-validation"
            novalidate>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div class="form-group">
             <label for="kindOfRequest">Kind of Request</label>
             <select class="custom-select my-1 mr-sm-2" name="ticketTypeId" id="kindOfRequest"

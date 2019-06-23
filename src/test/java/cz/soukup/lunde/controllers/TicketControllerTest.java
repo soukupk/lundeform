@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -50,7 +51,8 @@ public class TicketControllerTest {
                 .param("policyNumber", "100012")
                 .param("name", "Jan")
                 .param("surname", "Doe")
-                .param("customerRequest", "Could you please help me."))
+                .param("customerRequest", "Could you please help me.")
+                .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("flashSuccessMessage", "New ticket created. Thank you."));
     }
@@ -63,7 +65,8 @@ public class TicketControllerTest {
                 .param("policyNumber", "100012&&&INVALID")
                 .param("name", "Jan")
                 .param("surname", "Doe")
-                .param("customerRequest", "Could you please help me."))
+                .param("customerRequest", "Could you please help me.")
+                .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("ticketTypes", Collections.singletonList(ticketTypeDto)))
                 .andExpect(model().attribute("createTicketForm", CreateTicketForm.builder()
