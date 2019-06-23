@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 public class TicketCreatorTest {
 
     @Mock
-    TicketTypeRepository ticketTypeRepository; // todo split it to small parts
+    TicketTypeRepository ticketTypeRepository;
 
     @Mock
     TicketRepository ticketRepository;
@@ -70,12 +70,10 @@ public class TicketCreatorTest {
     }
 
     @Test
-    public void createFailsIfInvalidPolicyNumber() { // TODO rename
+    public void createFailsIfInvalidInput() {
         ServiceResponse<TicketDto> ticketDtoServiceResponse = ticketCreator.create(CreateTicketRequest
                 .create(10l, "ABC1923$$$$$$INVALID#", "Jan102invalid", "Doe103invalid",
                         "Could you please help me?"));
-
-        // TODO validate long string
 
         assertEquals(ServiceResponse.createFailureResponse(ValidationError.createSet(ImmutableMap.of(
                 "policyNumber", "Invalid policy number. Only alphanumeric chars are allowed.",

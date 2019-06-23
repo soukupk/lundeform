@@ -28,7 +28,6 @@ public class CreateTicketRequest {
     @Pattern(regexp = "^[A-Za-z]*$", message = "Invalid policy number. Only alphabetic chars are allowed.")
     private final String surname;
 
-    // TODO validate
     @NotBlank(message = "Customer request must not be blank.")
     @Length(min = 3, max = 5000)
     private final String customerRequest;

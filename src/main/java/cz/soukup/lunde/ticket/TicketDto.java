@@ -13,7 +13,7 @@ public class TicketDto {
 
     private final Long id;
 
-    private final String ticketTypeName; // TODO
+    private final String ticketTypeName;
 
     private final String policyNumber;
 
