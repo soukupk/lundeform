@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lundefom</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+
+<body>
+
+<div class="container">
+    <div class="alert alert-success" role="alert" th:if="${flashSuccessMessage != null}" th:text="${flashSuccessMessage}">
+    </div>
+
+    <h1>Contact us</h1>
+    <form th:action="@{/}" th:object="${createTicketForm}" method="post" class="needs-validation"
+           novalidate>
+        <div class="form-group">
+            <label for="kindOfRequest">Kind of Request</label>
+            <select class="custom-select my-1 mr-sm-2" name="ticketTypeId" id="kindOfRequest"
+                    th:classappend="${! formErrors.errors('ticketTypeId').isEmpty()} ? is-invalid">
+                <option th:value="${null}">Choose...</option>
+                <option th:each="ticketType: ${ticketTypes}" th:value="${ticketType.id}"
+                        th:text="${ticketType.name}" th:selected="${ticketType.id == createTicketForm.ticketTypeId}"></option>
+            </select>
+            <div class="invalid-feedback" th:each="err : ${formErrors.errors('ticketTypeId')}" th:text="${err}" />
+        </div>
+
+        <div class="form-group">
+            <label for="policyNumber">Policy Number</label>
+            <input type="text" class="form-control" id="policyNumber"
+                   placeholder="Policy Number" th:field="*{policyNumber}"
+                   th:classappend="${! formErrors.errors('policyNumber').isEmpty()} ? is-invalid">
+            <div class="invalid-feedback" th:each="err : ${formErrors.errors('policyNumber')}" th:text="${err}" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}"
+                   th:classappend="${! formErrors.errors('name').isEmpty()} ? is-invalid">
+            <div class="invalid-feedback" th:each="err : ${formErrors.errors('name')}" th:text="${err}" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Surname</label>
+            <input type="text" class="form-control" id="surname" placeholder="Surname" th:field="*{surname}"
+                   th:classappend="${! formErrors.errors('surname').isEmpty()} ? is-invalid">
+            <div class="invalid-feedback" th:each="err : ${formErrors.errors('surname')}" th:text="${err}" />
+        </div>
+
+        <div class="form-group">
+            <label for="customerRequest">Your request</label>
+            <textarea class="form-control" id="customerRequest" placeholder="Your request" th:field="*{customerRequest}"
+                      th:classappend="${! formErrors.errors('customerRequest').isEmpty()} ? is-invalid"> </textarea>
+            <div class="invalid-feedback" th:each="err : ${formErrors.errors('customerRequest')}" th:text="${err}" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
