@@ -43,8 +43,9 @@ public class TicketCreatorTest {
 
     @Test
     public void create() {
+        TicketType ticketType = TicketType.builder().id(10l).name("Contract Adjustment").build();
         Mockito.when(ticketTypeRepository.findById(10l))
-                .thenReturn(Optional.of(TicketType.builder().id(10l).name("Contract Adjustment").build()));
+                .thenReturn(Optional.of(ticketType));
 
         ServiceResponse<TicketDto> ticketDtoServiceResponse = ticketCreator.create(CreateTicketRequest
                 .create(10l, "ABC1923", "Jan", "Doe",
@@ -53,6 +54,14 @@ public class TicketCreatorTest {
         TicketDto expectedTicketDto = new TicketDto(null, "Contract Adjustment", "ABC1923",
                 "Jan", "Doe", "Could you please help me?");
         assertEquals(ServiceResponse.createSuccessResponse(expectedTicketDto), ticketDtoServiceResponse);
+
+        Mockito.verify(ticketRepository).save(Ticket.builder()
+                .ticketType(ticketType)
+                .policyNumber("ABC1923")
+                .name("Jan")
+                .surname("Doe")
+                .customerRequest("Could you please help me?")
+                .build());
     }
 
     @Test
